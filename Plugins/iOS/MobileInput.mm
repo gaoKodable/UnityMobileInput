@@ -284,6 +284,7 @@ BOOL multiline;
     BOOL withDoneButton = [[data valueForKey:@"with_done_button"] boolValue];
     BOOL withClearButton = [[data valueForKey:@"with_clear_button"] boolValue];
     multiline = [[data valueForKey:@"multiline"] boolValue];
+    BOOL allCap = NO;
     BOOL autoCorrection = NO;
     BOOL password = NO;
     NSString *inputType = [data valueForKey:@"input_type"];
@@ -297,6 +298,7 @@ BOOL multiline;
         keyType = UIKeyboardTypeDecimalPad;
     } else if ([contentType isEqualToString:@"Alphanumeric"]) {
         keyType = UIKeyboardTypeAlphabet;
+        allCap = YES;
     } else if ([contentType isEqualToString:@"Name"]) {
         keyType = UIKeyboardTypeNamePhonePad;
     } else if ([contentType isEqualToString:@"EmailAddress"]) {
@@ -453,10 +455,13 @@ BOOL multiline;
         }
         NSMutableParagraphStyle *setting = [[NSMutableParagraphStyle alloc] init];
         setting.alignment = textAlign;
-        textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholder attributes:@{NSForegroundColorAttributeName: placeHolderColor, NSParagraphStyleAttributeName : setting}];        
+        textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholder attributes:@{NSForegroundColorAttributeName: placeHolderColor, NSParagraphStyleAttributeName : setting}];
         textField.delegate = self;
         if (keyType == UIKeyboardTypeEmailAddress) {
             textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        }
+        if (allCap) {
+            textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
         }
         [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         [textField addTarget:self action:@selector(textFieldActive:) forControlEvents:UIControlEventEditingDidBegin];

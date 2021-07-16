@@ -16,4 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Hotfix for no init in editor
 
+## [1.0.3] - 2021-07-16
+
+### All caps for Alphanumeric input
+
 Unity Native Input Plugin for both iOS and Android (Unity UI compatible)
