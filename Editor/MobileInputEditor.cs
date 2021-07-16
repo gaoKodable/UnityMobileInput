@@ -50,6 +50,16 @@ namespace Mopsicus.Plugins {
         /// </summary>
         private SerializedProperty _onReturnPressedEvent;
 
+        /// <summary>
+		/// Focus gained event
+		/// </summary>
+        private SerializedProperty _onFocusGainedEvent;
+
+        /// <summary>
+		/// Focus lost event
+		/// </summary>
+        private SerializedProperty _onFocusLostEvent;
+
 #if UNITY_IOS
         /// <summary>
         /// Visible Done button
@@ -71,6 +81,8 @@ namespace Mopsicus.Plugins {
             _customFont = _object.FindProperty ("CustomFont");
             _isManualHideControl = _object.FindProperty ("IsManualHideControl");
             _onReturnPressedEvent = _object.FindProperty ("OnReturnPressedEvent");
+            _onFocusGainedEvent = _object.FindProperty("OnFocusGainedEvent");
+            _onFocusLostEvent = _object.FindProperty("OnFocusLostEvent");
 #if UNITY_IOS
             _isWithDoneButton = _object.FindProperty ("IsWithDoneButton");
             _isWithClearButton = _object.FindProperty ("IsWithClearButton");
@@ -103,6 +115,8 @@ namespace Mopsicus.Plugins {
             GUILayout.Space (OFFSET);
 #endif
             EditorGUILayout.PropertyField (_onReturnPressedEvent);
+            EditorGUILayout.PropertyField(_onFocusGainedEvent);
+            EditorGUILayout.PropertyField(_onFocusLostEvent);
             if (EditorGUI.EndChangeCheck ()) {
                 _object.ApplyModifiedProperties ();
             }

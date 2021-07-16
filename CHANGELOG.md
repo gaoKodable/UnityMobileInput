@@ -8,4 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### This is the first release of Unity Mobile Input.
 
+## [1.0.1] - 2021-07-16
+
+### Added focus UnityEvents for MobileInputField
+
 Unity Native Input Plugin for both iOS and Android (Unity UI compatible)

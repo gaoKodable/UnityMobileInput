@@ -51,7 +51,7 @@ namespace Mopsicus.Plugins {
         /// <summary>
         /// Custom font name
         /// </summary>
-        public string CustomFont = "default";        
+        public string CustomFont = "default";
 
         /// <summary>
         /// Hide and deselect input manually
@@ -87,6 +87,16 @@ namespace Mopsicus.Plugins {
         /// Event when Return pressed, for Unity inspector
         /// </summary>
         public UnityEvent OnReturnPressedEvent;
+
+        /// <summary>
+		/// Event when focused, for Unity inspector
+		/// </summary>
+        public UnityEvent OnFocusGainedEvent;
+
+        /// <summary>
+		/// Event when focus is lost, for Unity inspector
+		/// </summary>
+        public UnityEvent OnFocusLostEvent;
 
         /// <summary>
         /// Mobile input creation flag
@@ -300,6 +310,7 @@ namespace Mopsicus.Plugins {
             this.UpdateForceKeyeventForAndroid ();
 #endif
             if (_isMobileInputCreated && this._inputObject != null) {
+                SetRectNative(this._inputObjectText.rectTransform);
 #if !UNITY_EDITOR
                 int touchCount = Input.touchCount;
                 if (touchCount > 0) {
@@ -314,7 +325,6 @@ namespace Mopsicus.Plugins {
                     }
                 }
 #endif
-                SetRectNative (this._inputObjectText.rectTransform);
             }
         }
 
@@ -352,7 +362,7 @@ namespace Mopsicus.Plugins {
 			}
 			Rect result = new Rect (xMin, Screen.height - yMax, xMax - xMin, yMax - yMin);
 			return result;
-		}        
+		}
 
         /// <summary>
         /// Prepare config
@@ -429,8 +439,16 @@ namespace Mopsicus.Plugins {
                 this.Ready ();
             } else if (msg.Equals (ON_FOCUS)) {
                 OnFocusChanged (true);
+                if (OnFocusGainedEvent != null)
+                {
+                    OnFocusGainedEvent.Invoke();
+                }
             } else if (msg.Equals (ON_UNFOCUS)) {
                 OnFocusChanged (false);
+                if (OnFocusLostEvent != null)
+                {
+                    OnFocusLostEvent.Invoke();
+                }
             } else if (msg.Equals (TEXT_END_EDIT)) {
                 string text = data["text"];
                 this.OnTextEditEnd (text);
@@ -470,7 +488,7 @@ namespace Mopsicus.Plugins {
             data["back_color_r"] = InvariantCultureString(_config.BackgroundColor.r);
             data["back_color_g"] = InvariantCultureString(_config.BackgroundColor.g);
             data["back_color_b"] = InvariantCultureString(_config.BackgroundColor.b);
-            data["back_color_a"] = InvariantCultureString(_config.BackgroundColor.a);
+            data["back_color_a"] = InvariantCultureString(0);
             data["font_size"] = InvariantCultureString(_config.FontSize);
             data["content_type"] = _config.ContentType;
             data["align"] = _config.Align;
