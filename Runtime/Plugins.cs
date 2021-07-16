@@ -52,7 +52,7 @@ namespace Mopsicus.Plugins {
         /// </summary>
         [DllImport ("__Internal")]
         private static extern void pluginsInit (string data);
-#endif		
+#endif
 
         /// <summary>
         /// Gameobject name on scene to receive data
@@ -88,7 +88,7 @@ namespace Mopsicus.Plugins {
             gameObject.AddComponent<MobileInput> ();
             //
             // other plugins
-            //			
+            //
             IPlugin[] plugins = GetComponents<IPlugin> ();
             _plugins = new Dictionary<string, IPlugin> (plugins.Length);
             foreach (var item in plugins) {
@@ -97,7 +97,7 @@ namespace Mopsicus.Plugins {
             JsonObject data = new JsonObject ();
             data["object"] = _dataObject;
             data["receiver"] = _dataReceiver;
-#if UNITY_IOS
+#if UNITY_IOS && !UNITY_EDITOR
             pluginsInit (data.ToJsonString ());
 #endif
             Debug.Log ("Plugins init");
