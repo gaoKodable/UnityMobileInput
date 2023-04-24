@@ -337,7 +337,9 @@ namespace Mopsicus.Plugins {
         void OnApplicationFocus (bool focusStatus) {
             if (!focusStatus) {
                 foreach (var item in _instance._inputs.Values) {
-                    item.Hide ();
+                    if (item != null) {
+                        item.Hide ();
+                    }
                 }
             }
         }
